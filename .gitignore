@@ -1,0 +1,17 @@
+.env
+.env.local
+
+__pycache__
+
+# Ignore BART model directory
+backend/bart-model
+
+# Ignore fine-tuned model directory
+backend/fine_tuned_model
+
+# Ignore all files inside mt5-result directory
+backend/mt5_results/*
+
+# Ignore specific model directory
+backend/mT5-small
+
