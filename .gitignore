@@ -6,7 +6,7 @@ __pycache__
 # Ignore BART model directory
 backend/bart-model
 
-# Ignore fine-tuned model directory
+# Ignore fine-tuned model directory ()
 backend/fine_tuned_model
 
 # Ignore all files inside mt5-result directory
