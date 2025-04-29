@@ -1,4 +1,4 @@
-# NLP System with mT5 + BART and Next.js Frontend
+# NLP System with mT5 + BART and Next.js
 
 ## 📌 Overview
 This project is an **AI-powered Natural Language Processing (NLP) system** using:
