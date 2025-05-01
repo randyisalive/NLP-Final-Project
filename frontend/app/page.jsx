@@ -42,7 +42,12 @@ export default function Home() {
         </div>
       </div>
       <div className=" w-[85%] overflow-y-auto py-[20px] px-[30px]">
-        <TextAreaBox model={model} modelSelected={modelSelected} />
+        <TextAreaBox
+          model={model}
+          modelSelected={modelSelected}
+          form={form}
+          handleForm={handleForm}
+        />
         <ResultBox />
       </div>
     </div>
