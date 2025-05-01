@@ -11,6 +11,13 @@ const useSummarizeData = () => {
   });
   const [isLoading, setIsLoading] = useState(0);
 
+  // model selection
+  const [model, setModel] = useState([
+    { id: 0, title: "mT5 Model", sub: "Standard AI detection" },
+    { id: 1, title: "BERT Model", sub: "Deeper pattern analysis" },
+  ]);
+  const [modelSelected, setModelSelected] = useState(0);
+
   // get rouge scores for the model
   useEffect(() => {
     const fetchRouge = async () => {
@@ -46,7 +53,16 @@ const useSummarizeData = () => {
       setIsLoading(0);
     }
   };
-  return { summary, handleForm, submitForm, form, isLoading, rouge };
+  return {
+    summary,
+    handleForm,
+    submitForm,
+    form,
+    isLoading,
+    rouge,
+    model,
+    modelSelected,
+  };
 };
 
 export default useSummarizeData;
