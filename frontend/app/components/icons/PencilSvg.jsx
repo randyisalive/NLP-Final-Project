@@ -1,0 +1,34 @@
+import React from "react";
+
+const PencilSvg = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+    >
+      <path
+        d="M2 14L3.33333 10L10.6667 2.66669C11.3333 2.00002 12.6667 2.00002 13.3333 2.66669C14 3.33335 14 4.66669 13.3333 5.33335L6 12.6667L2 14Z"
+        stroke="#3B3A3B"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 3.33337L12.6667 6.00004"
+        stroke="#3B3A3B"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4 10L6 12"
+        stroke="#3B3A3B"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export default PencilSvg;
