@@ -21,6 +21,8 @@ export const SummarizeContextProvider = ({ children }) => {
     selectModel,
     sidebar,
     handleSidebar,
+    chats,
+    delete_chat_data,
   } = useSummarizeData();
 
   return (
@@ -38,6 +40,8 @@ export const SummarizeContextProvider = ({ children }) => {
         selectModel,
         sidebar,
         handleSidebar,
+        chats,
+        delete_chat_data,
       }}
     >
       {children}

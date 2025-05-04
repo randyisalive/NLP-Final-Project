@@ -46,7 +46,7 @@ edf["text"] = edf["paragraphs"].apply(flatten_text)
 edf["summary_text"] = edf["summary"].apply(flatten_text)
 
 # data config
-limit_data = 2000
+limit_data = 1000
 print(f"LIMIT SET TO {limit_data}")
 df = df[["text", "summary_text"]].head(limit_data)
 edf = edf[["text", "summary_text"]].head(limit_data)

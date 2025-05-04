@@ -5,10 +5,18 @@ import { useSummarizeContext } from "../context/useSummarizeContext";
 import bg_button from "./../../public/bx_sidebar.png";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
+import { truncateString } from "../function/truncate_string";
 
 const TextAreaBox = () => {
-  const { model, modelSelected, form, handleForm, handleSidebar, sidebar } =
-    useSummarizeContext();
+  const {
+    model,
+    modelSelected,
+    form,
+    handleForm,
+    handleSidebar,
+    summary,
+    submitForm,
+  } = useSummarizeContext();
   return (
     <div
       className="min-w-[1164px]   h-[852px]"
@@ -34,7 +42,9 @@ const TextAreaBox = () => {
               />
             </motion.div>
           </AnimatePresence>
-          <span className="text-[14px] font-[500]">Untitled Document</span>
+          <span className="text-[14px] font-[500]">
+            {truncateString(summary.text ?? "Untitled Document", 50)}
+          </span>
           <i className="pi pi-angle-down"></i>
         </div>
       </div>
@@ -74,10 +84,15 @@ const TextAreaBox = () => {
 
           <div className="border-t p-[12px] gap-[24px] flex flex-col border-[#F0F0F0] ">
             <div className="flex flex-col text-[14px] font-[400]">
-              <span>{form?.input.length} / 250 maximum character</span>
+              <span>{form?.input?.length} / 250 maximum character</span>
               <span>{} words</span>
             </div>
-            <SummarizeButton status={form.input.length > 0 ? true : false} />
+            <SummarizeButton
+              onClickFunction={submitForm}
+              status={form.input?.length > 0 ? true : false}
+              clickType
+              title="Summarize"
+            />
           </div>
         </div>
       </div>

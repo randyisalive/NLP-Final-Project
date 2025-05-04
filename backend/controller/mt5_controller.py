@@ -11,11 +11,13 @@ def generate_mt5_summary(text):
     device = current_app.config["device"]
 
     input_text = "summarize: " + text
-    inputs = tokenizer(input_text, return_tensors="pt", truncation=True, max_length=512)
-    max_length = max(10, int(0.2 * len(inputs["input_ids"])))
-    summary_ids = model.generate(
-        inputs["input_ids"], max_length=100, num_beams=4, early_stopping=True
+    inputs = tokenizer(
+        input_text, return_tensors="pt", truncation=True, max_length=512, padding=True
     )
+    summary_ids = model.generate(
+        inputs["input_ids"], max_length=100, num_beams=6, early_stopping=True
+    )
+
     return tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
 

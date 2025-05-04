@@ -84,7 +84,7 @@ training_args = TrainingArguments(
     learning_rate=5e-5,
     per_device_train_batch_size=2,
     per_device_eval_batch_size=2,
-    num_train_epochs=3,
+    num_train_epochs=20,
     weight_decay=0.01,
     save_total_limit=3,
     logging_dir="./logs",
@@ -106,4 +106,4 @@ trainer.train()
 # Evaluate the model
 trainer.evaluate()
 
-trainer.save_model("./fine_tuned_model")
+trainer.save_model("./fine_tuned_model_50_epoch")

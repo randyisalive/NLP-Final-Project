@@ -24,7 +24,7 @@ export async function POST(request) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ input_text: input_text }),
+      body: JSON.stringify({ text: input_text }),
     });
     const data = await response.json();
     return NextResponse.json({ data: data }, { status: 200 });

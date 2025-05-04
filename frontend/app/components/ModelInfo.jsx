@@ -3,7 +3,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSummarizeContext } from "../context/useSummarizeContext";
 
-const ModelInfo = ({ model_data = {} }) => {
+const ModelInfo = ({ model_data = {}, visible = false }) => {
   const { closeInformation } = useSummarizeContext();
   return (
     <React.Fragment>

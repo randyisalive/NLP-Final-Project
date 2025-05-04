@@ -1,8 +1,9 @@
-from flask import Flask, Blueprint
+from flask import Flask
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv, find_dotenv
 from api.model_api import model_api
+from api.chat_api import chat_api
 from views.home_views import home_views
 from models.load_all_data import training_dataset, evaluation_dataset
 
@@ -30,9 +31,11 @@ app.config["evaluation_dataset"] = evaluation_dataset
 app.config["model"] = model
 app.config["tokenizer"] = tokenizer
 app.config["device"] = device
+app.config["DATABASE"] = os.environ.get("DATABASE")
 
 
 app.register_blueprint(model_api)
+app.register_blueprint(chat_api)
 
 # views blueprint
 app.register_blueprint(home_views)
