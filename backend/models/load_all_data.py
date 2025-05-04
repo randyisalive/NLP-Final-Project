@@ -1,6 +1,13 @@
 import json
 import pandas as pd
-from datasets import Dataset  # Import Dataset from Hugging Face's datasets library
+from datasets import Dataset
+import os
+
+
+# LOAD ENV
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv(filename=".env.local"))
 
 
 def load_jsonl(file_path):
@@ -46,7 +53,7 @@ edf["text"] = edf["paragraphs"].apply(flatten_text)
 edf["summary_text"] = edf["summary"].apply(flatten_text)
 
 # data config
-limit_data = 1000
+limit_data = int(os.environ.get("DATASETS_LIMIT"), 0)
 print(f"LIMIT SET TO {limit_data}")
 df = df[["text", "summary_text"]].head(limit_data)
 edf = edf[["text", "summary_text"]].head(limit_data)
@@ -55,5 +62,5 @@ edf = edf[["text", "summary_text"]].head(limit_data)
 training_dataset = Dataset.from_pandas(df)
 evaluation_dataset = Dataset.from_pandas(edf)
 
-print(training_dataset)
-print(evaluation_dataset)
+print("Training Datasets Summary: ", training_dataset)
+print("Evaluation Datasets Summary: ", evaluation_dataset)

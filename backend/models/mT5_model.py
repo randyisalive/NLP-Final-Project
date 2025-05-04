@@ -1,3 +1,4 @@
+import torch.version
 from load_all_data import training_dataset, evaluation_dataset
 
 
@@ -11,13 +12,14 @@ from transformers import (
 import torch
 import os
 
-
-model_dir = "mT5-small"
+model_dir = os.environ.get("MT5_MODEL_DIR")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model_mT5 = ""
 tokenizer_mT5 = ""
 
-
+# check model_dir exist
+if not os.path.exists(model_dir):
+    os.mkdir("./mT5-small")  # create folder
 # check if model_dir empty
 if len(os.listdir(model_dir)) == 0:
     # save mT5
@@ -77,18 +79,18 @@ tokenized_eval_dataset = evaluation_dataset.map(
 tokenized_train_dataset = training_dataset.map(preprocess_function, batched=True)
 tokenized_eval_dataset = evaluation_dataset.map(preprocess_function, batched=True)
 
-
+MT5_NUM_TRAIN_EPOCH = int(os.environ.get("MT5_NUM_TRAIN_EPOCH"), 0)
 training_args = TrainingArguments(
     output_dir="./mt5_results",
     eval_strategy="epoch",
     learning_rate=5e-5,
     per_device_train_batch_size=2,
     per_device_eval_batch_size=2,
-    num_train_epochs=20,
+    num_train_epochs=MT5_NUM_TRAIN_EPOCH,
     weight_decay=0.01,
     save_total_limit=3,
     logging_dir="./logs",
-    logging_steps=1,
+    logging_steps=10,
 )
 
 
@@ -106,4 +108,4 @@ trainer.train()
 # Evaluate the model
 trainer.evaluate()
 
-trainer.save_model("./fine_tuned_model_50_epoch")
+trainer.save_model(f"./fine_tuned_model_{MT5_NUM_TRAIN_EPOCH}_epoch")
