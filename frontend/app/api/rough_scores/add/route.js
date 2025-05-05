@@ -6,7 +6,7 @@ export async function POST(request) {
   // fetch
   try {
     const API_URL = process.env.API_URL;
-    const response = await fetch(`${API_URL}/rouge_scores/get`, {
+    const response = await fetch(`${API_URL}/rouge_scores`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

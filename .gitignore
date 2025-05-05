@@ -5,9 +5,11 @@ __pycache__
 
 # Ignore BART model directory
 backend/bart-model
+backend/bart-indosum-final-fold1
 
 # Ignore fine-tuned model directory ()
 backend/fine_tuned_model
+backend/fine_tuned_model_20_epoch
 
 # Ignore all files inside mt5-result directory
 backend/mt5_results/*

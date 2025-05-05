@@ -46,13 +46,13 @@ def get_chat_by_id(id):
         print(e)
 
 
-def add_chat(text, summary, user_id):
+def add_chat(text, summary, user_id, model_id):
     db = db_connection()
     cur = db.cursor()
     dateNow = datetime.datetime.now()
     try:
-        sql = f"INSERT INTO chat_data (text, summary, user_id, date) VALUES (?,?,?,?)"
-        params = (text, summary, user_id, dateNow)
+        sql = f"INSERT INTO chat_data (text, summary, user_id, date,model_id) VALUES (?,?,?,?,?)"
+        params = (text, summary, user_id, dateNow, model_id)
         cur.execute(sql, params)
         db.commit()
     except Exception as e:

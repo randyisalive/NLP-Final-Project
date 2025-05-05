@@ -6,7 +6,7 @@ const useSummarizeData = () => {
   // api
 
   const [summary, setSummary] = useState({ text: "", summary: "", date: "" });
-  const [rouge, setRouge] = useState([]);
+
   const [form, setForm] = useState({
     input: "",
   });
@@ -18,41 +18,6 @@ const useSummarizeData = () => {
   };
 
   const [isLoading, setIsLoading] = useState(0);
-
-  // model selection
-  const [model, setModel] = useState([
-    {
-      id: 0,
-      title: "mT5 Model",
-      sub: "Standard AI detection",
-      info_status: false,
-      information: `
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi id
-            repellat ea adipisci voluptate facere porro delectus nostrum
-            blanditiis excepturi, voluptatem dolores nulla cupiditate cum illum?
-            Quam, fuga. Est, consectetur.
-      
-      `,
-    },
-    {
-      id: 1,
-      title: "BERT Model",
-      sub: "Deeper pattern analysis",
-      info_status: false,
-      information: `
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi id
-            repellat ea adipisci voluptate facere porro delectus nostrum
-            blanditiis excepturi, voluptatem dolores nulla cupiditate cum illum?
-            Quam, fuga. Est, consectetur.
-      
-      `,
-    },
-  ]);
-  const [modelSelected, setModelSelected] = useState(0);
-
-  const selectModel = async (value) => {
-    setModelSelected(value);
-  };
 
   const closeInformation = (id) => {
     setModel((prev) =>
@@ -68,44 +33,47 @@ const useSummarizeData = () => {
     );
   };
 
-  useEffect(() => {
-    console.log(model);
-  }, [model]);
-
-  /*  // get rouge scores for the model
-  useEffect(() => {
-    const fetchRouge = async () => {
-      try {
-        const response = await fetch("/api/rough_scores");
-        const data = await response.json();
-        setRouge(data.data);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-    fetchRouge();
-  }, []); */
-
   // handle form
   const handleForm = (e) => {
     setForm((prev) => ({ ...prev, input: e.target.value }));
   };
 
-  const submitForm = async () => {
+  // chat data
+  const [chats, setChats] = useState([]);
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const id = params.get("id");
+
+  // chats data fetch
+  const fetchChats = async () => {
+    try {
+      const response = await fetch("/api/chat");
+      const data = await response.json();
+      setChats(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+  useEffect(() => {
+    fetchChats();
+  }, []);
+
+  const submitForm = async (model_id) => {
     setIsLoading(1);
     setSummary({ text: "", summary: "", date: "" });
     if (form.input == "") {
       return;
     }
-
     const response = await fetch("/api/chat", {
       method: "POST",
-      body: JSON.stringify({ text: form.input }),
+      body: JSON.stringify({
+        text: form.input,
+        chat_id: id,
+        model_id: model_id,
+      }),
     });
     const data = await response.json();
     if (data) {
-      console.log("SUCCESS");
-
       setSummary({
         text: data.data?.text,
         summary: data.data?.summary,
@@ -115,25 +83,6 @@ const useSummarizeData = () => {
       setIsLoading(2);
     }
   };
-
-  // chat data
-  const [chats, setChats] = useState([]);
-  const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
-  const id = params.get("id");
-  const fetchChats = async () => {
-    try {
-      const response = await fetch("/api/chat");
-      const data = await response.json();
-      console.log(data);
-      setChats(data);
-    } catch (e) {
-      console.error(e);
-    }
-  };
-  useEffect(() => {
-    fetchChats();
-  }, []);
 
   useEffect(() => {
     const fetchChatId = async () => {
@@ -182,11 +131,9 @@ const useSummarizeData = () => {
     submitForm,
     form,
     isLoading,
-    rouge,
-    model,
-    modelSelected,
+
     closeInformation,
-    selectModel,
+
     sidebar,
     handleSidebar,
     chats,

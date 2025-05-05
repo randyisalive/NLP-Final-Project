@@ -1,7 +1,8 @@
 import React from "react";
 import ModelInfo from "./ModelInfo";
-import { useSummarizeContext } from "../context/useSummarizeContext";
 import { AnimatePresence } from "framer-motion";
+import { useRougeScoresContext } from "../context/useRougeScoresContext";
+import { useModelStatsContext } from "../context/useModelStatsContext";
 
 const AiCard = ({
   ai_title = "AI Title",
@@ -10,7 +11,8 @@ const AiCard = ({
   info_status = false,
   model_data = {},
 }) => {
-  const { closeInformation, selectModel } = useSummarizeContext();
+  const { selectModel } = useRougeScoresContext();
+  const { closeInformation } = useModelStatsContext();
   return (
     <div
       className={` flex py-[12px] px-[8px] gap-[10px] border   rounded-[8px] ${

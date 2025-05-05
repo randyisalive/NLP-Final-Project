@@ -6,17 +6,15 @@ import bg_button from "./../../public/bx_sidebar.png";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { truncateString } from "../function/truncate_string";
+import ModelStats from "./ModelStats";
+import { useModelStatsContext } from "../context/useModelStatsContext";
+import { useRougeScoresContext } from "../context/useRougeScoresContext";
 
 const TextAreaBox = () => {
-  const {
-    model,
-    modelSelected,
-    form,
-    handleForm,
-    handleSidebar,
-    summary,
-    submitForm,
-  } = useSummarizeContext();
+  const { form, handleForm, handleSidebar, summary, submitForm } =
+    useSummarizeContext();
+  const { model } = useModelStatsContext();
+  const { modelSelected } = useRougeScoresContext();
   return (
     <div
       className="min-w-[1164px]   h-[852px]"
@@ -81,14 +79,16 @@ const TextAreaBox = () => {
               })}
             </div>
           </div>
+          <div className=" h-full flex justify-center items-center">
+            <ModelStats />
+          </div>
 
           <div className="border-t p-[12px] gap-[24px] flex flex-col border-[#F0F0F0] ">
             <div className="flex flex-col text-[14px] font-[400]">
               <span>{form?.input?.length} / 250 maximum character</span>
-              <span>{} words</span>
             </div>
             <SummarizeButton
-              onClickFunction={submitForm}
+              onClickFunction={() => submitForm(modelSelected)}
               status={form.input?.length > 0 ? true : false}
               clickType
               title="Summarize"

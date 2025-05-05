@@ -35,7 +35,7 @@ export async function GET(req) {
 // add chat data
 export async function POST(request) {
   // request json
-  const { text, user_id } = await request.json();
+  const { text, chat_id, model_id } = await request.json();
 
   // fetch
   try {
@@ -45,7 +45,11 @@ export async function POST(request) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text: text }),
+      body: JSON.stringify({
+        text: text,
+        chat_id: chat_id,
+        model_id: model_id,
+      }),
     });
     const data = await response.json();
 

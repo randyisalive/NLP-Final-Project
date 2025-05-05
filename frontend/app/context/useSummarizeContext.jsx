@@ -14,11 +14,9 @@ export const SummarizeContextProvider = ({ children }) => {
     submitForm,
     form,
     isLoading,
-    rouge,
-    model,
-    modelSelected,
+
     closeInformation,
-    selectModel,
+
     sidebar,
     handleSidebar,
     chats,
@@ -33,11 +31,7 @@ export const SummarizeContextProvider = ({ children }) => {
         submitForm,
         form,
         isLoading,
-        rouge,
-        model,
-        modelSelected,
-        closeInformation,
-        selectModel,
+
         sidebar,
         handleSidebar,
         chats,

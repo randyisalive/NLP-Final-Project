@@ -23,12 +23,12 @@ def evaluate_rouge(generated_list, reference_list):
 
 # example usage
 # Collect mT5-small summaries
-mt5_summaries = [generate_mt5_summary(training_dataset["text"][i]) for i in range(10)]
+mt5_summaries = [generate_mt5_summary(training_dataset["text"][i]) for i in range(1)]
 print(mt5_summaries)
 print(training_dataset)
 # Collect XLsum summaries
 # Ground truth
-references = [training_dataset["summary_text"][i] for i in range(10)]
+references = [training_dataset["summary_text"][i] for i in range(1)]
 
 mt5_rouge = evaluate_rouge(mt5_summaries, references)
 

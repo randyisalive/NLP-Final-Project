@@ -1,5 +1,6 @@
 from controller.chat_contoller import add_chat, get_chat, get_chat_by_id, delete_chat
 from controller.mt5_controller import generate_mt5_summary
+from controller.bart_controller import generate_bart_summary
 from flask import Blueprint, request, jsonify, current_app
 
 chat_api = Blueprint("chat_api", __name__)
@@ -32,9 +33,16 @@ def add():
         data = request.json
         print(data)
         text = data.get("text")
-        summary = generate_mt5_summary(text)
+        model_id = data.get("model_id")
+        chat_id = data.get("chat_id")
+        summary = ""
+        if model_id == 0:
+            summary = generate_mt5_summary(text)
+        elif model_id == 1:
+            summary = generate_bart_summary(text)
         user_id = 1
-        add_chat(text, summary, user_id)
+        if chat_id is None:
+            add_chat(text, summary, user_id, model_id)
         return jsonify(
             {"summary": summary, "message": "add chat successfully", "status": 200}
         )

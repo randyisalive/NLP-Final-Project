@@ -37,16 +37,52 @@ else:
     print("Model mT5 loaded!")
 
 
-# mT5 section
+import re
+
+
+def clean_text(text):
+    # Remove bracketed references like [9], [10], etc.
+    text = re.sub(r"\[\d+(?:\]\[\d+)*\]", "", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def remove_repetitions(summary):
+    sentences = summary.split(". ")
+    seen = set()
+    unique_sentences = []
+    for sentence in sentences:
+        trimmed = sentence.strip()
+        if trimmed and trimmed not in seen:
+            seen.add(trimmed)
+            unique_sentences.append(trimmed)
+    return ". ".join(unique_sentences).strip()
+
+
 def generate_mt5_summary(text):
-    input_text = "summarize: " + text
+    cleaned_text = clean_text(text)
+    input_text = "summarize: " + cleaned_text
+
     inputs = tokenizer_mT5(
         input_text, return_tensors="pt", truncation=True, max_length=512
     ).to(device)
+
     summary_ids = model_mT5.generate(
-        inputs["input_ids"], max_length=100, num_beams=4, early_stopping=True
+        inputs["input_ids"],
+        max_length=100,
+        num_beams=4,
+        early_stopping=True,
+        no_repeat_ngram_size=2,
+        length_penalty=1.0,
     )
-    return tokenizer_mT5.decode(summary_ids[0], skip_special_tokens=True)
+
+    summary = tokenizer_mT5.decode(
+        summary_ids[0], skip_special_tokens=True, clean_up_tokenization_spaces=True
+    )
+
+    summary = re.sub(r"<extra_id_\d+>", "", summary).strip()
+    summary = remove_repetitions(summary)
+
+    return summary
 
 
 def preprocess_function(examples):
@@ -84,8 +120,8 @@ training_args = TrainingArguments(
     output_dir="./mt5_results",
     eval_strategy="epoch",
     learning_rate=5e-5,
-    per_device_train_batch_size=2,
-    per_device_eval_batch_size=2,
+    per_device_train_batch_size=64,
+    per_device_eval_batch_size=64,
     num_train_epochs=MT5_NUM_TRAIN_EPOCH,
     weight_decay=0.01,
     save_total_limit=3,

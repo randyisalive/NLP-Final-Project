@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useSummarizeContext } from "../context/useSummarizeContext";
+import { motion } from "framer-motion";
+import { useModelStatsContext } from "../context/useModelStatsContext";
 
 const ModelInfo = ({ model_data = {}, visible = false }) => {
-  const { closeInformation } = useSummarizeContext();
+  const { closeInformation } = useModelStatsContext();
   return (
     <React.Fragment>
       <div className=" absolute left-0 top-0 backdrop-blur-[5px] w-screen h-screen bg-opacity-50 text-base"></div>
