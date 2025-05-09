@@ -33,7 +33,7 @@ def generate_bart_summary(text):
 
     summary_ids = model.generate(
         inputs["input_ids"],
-        max_length=200,
+        max_length=100,
         num_beams=6,
         early_stopping=True,
         no_repeat_ngram_size=2,

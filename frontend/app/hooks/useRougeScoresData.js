@@ -11,6 +11,7 @@ const useRougeScoresData = () => {
   const [isLoadingRouge, setLoadingRouge] = useState(0);
   const [load, setLoad] = useState(false);
   const [modelSelected, setModelSelected] = useState(0);
+  const [testLen, setTestLen] = useState(10);
 
   const selectModel = async (value) => {
     setModelSelected(value);
@@ -57,10 +58,11 @@ const useRougeScoresData = () => {
     try {
       const response = await fetch("/api/rough_scores/add", {
         method: "POST",
-        body: JSON.stringify({ model_id: modelSelected }),
+        body: JSON.stringify({ model_id: modelSelected, test_len: testLen }),
       });
       const data = await response.json();
       setLoadingRouge(1);
+      changeRougeLoad();
       return data;
     } catch (e) {
       console.error(e);
@@ -74,6 +76,8 @@ const useRougeScoresData = () => {
     selectModel,
     updatRougeScores,
     changeRougeLoad,
+    testLen,
+    setTestLen,
   };
 };
 

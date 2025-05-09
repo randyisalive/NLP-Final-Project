@@ -54,9 +54,11 @@ edf["summary_text"] = edf["summary"].apply(flatten_text)
 
 # data config
 limit_data = int(os.environ.get("DATASETS_LIMIT"), 0)
+train_split = int(limit_data * 0.7)  # 70% for training
+eval_split = limit_data - train_split
 print(f"LIMIT SET TO {limit_data}")
-df = df[["text", "summary_text"]].head(limit_data)
-edf = edf[["text", "summary_text"]].head(limit_data)
+df = df[["text", "summary_text"]].head(train_split)
+edf = df[["text", "summary_text"]].head(eval_split)
 
 
 training_dataset = Dataset.from_pandas(df)

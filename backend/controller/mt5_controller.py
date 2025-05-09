@@ -45,6 +45,8 @@ def generate_mt5_summary(text):
     device = current_app.config["device"]
     cleaned_text = clean_text(text)
     input_text = "summary: " + cleaned_text
+    input_length = len(cleaned_text.split())
+    max_summary_length = min(max(10, input_length // 3), 200)
 
     inputs = tokenizer(
         input_text, return_tensors="pt", truncation=True, max_length=1024
@@ -52,8 +54,8 @@ def generate_mt5_summary(text):
 
     summary_ids = model.generate(
         inputs["input_ids"],
-        max_length=200,
-        num_beams=6,
+        max_length=max_summary_length,
+        num_beams=4,
         early_stopping=True,
         no_repeat_ngram_size=2,
         length_penalty=1.5,

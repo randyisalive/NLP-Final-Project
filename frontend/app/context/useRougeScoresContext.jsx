@@ -14,6 +14,8 @@ export const RougeScoresContextProvider = ({ children }) => {
     updatRougeScores,
     modelSelected,
     selectModel,
+    testLen,
+    setTestLen,
   } = useRougeScoresData();
 
   return (
@@ -24,6 +26,8 @@ export const RougeScoresContextProvider = ({ children }) => {
         updatRougeScores,
         modelSelected,
         selectModel,
+        testLen,
+        setTestLen,
       }}
     >
       {children}

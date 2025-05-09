@@ -1,7 +1,7 @@
 from controller.chat_contoller import add_chat, get_chat, get_chat_by_id, delete_chat
 from controller.mt5_controller import generate_mt5_summary
 from controller.bart_controller import generate_bart_summary
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 
 chat_api = Blueprint("chat_api", __name__)
 

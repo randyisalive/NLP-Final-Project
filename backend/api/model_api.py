@@ -3,6 +3,7 @@ from controller.mt5_controller import generate_mt5_summary, evaluate_rouge
 from controller.bart_controller import generate_bart_summary
 from controller.model_controller import getModel
 from controller.rouge_controller import add_rouge_data, get_rouge_data
+import os
 
 # load model pretrained
 
@@ -23,7 +24,10 @@ def rough_scores():
         data = request.json
         model_id = data.get("model_id")
         rouge_summaries = ""
-        test_len = 100
+        #  test_len = int(os.environ.get("ROUGE_SCORE_LEN"))
+        test_len = int(data.get("test_len"))
+        if test_len is None:
+            return None
         if model_id == 0:
             rouge_summaries = [
                 generate_mt5_summary(training_dataset["text"][i])
@@ -41,6 +45,7 @@ def rough_scores():
             r2=model_rouge["rouge2"],
             rl=model_rouge["rougeL"],
             model_id=model_id,
+            sample_size=test_len,
         )
         return jsonify(
             {

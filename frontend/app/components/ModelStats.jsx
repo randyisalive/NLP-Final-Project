@@ -6,7 +6,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRougeScoresContext } from "../context/useRougeScoresContext";
 
 const ModelStats = () => {
-  const { isLoadingRouge, rouge, updatRougeScores } = useRougeScoresContext();
+  const { isLoadingRouge, rouge, updatRougeScores, testLen, setTestLen } =
+    useRougeScoresContext();
   const [value, setValue] = useState(0);
 
   if (isLoadingRouge == 0) {
@@ -24,7 +25,19 @@ const ModelStats = () => {
       exit={{ opacity: 0 }}
       className="card flex justify-start h-full mt-5 w-full flex-col items-center gap-2 "
     >
-      <div className="w-full flex justify-end p-3">
+      <div className="w-full flex justify-between p-3">
+        <div className="flex flex-col gap-2 w-[100px]">
+          <label htmlFor="" className=" text-[12px]">
+            Rouge Samples
+          </label>
+          <input
+            type="number"
+            value={testLen}
+            onChange={(e) => setTestLen(e.target.value)}
+            className="border border-[#F0F0F0] w-full px-1 focus:outline-none"
+          />
+        </div>
+
         <motion.i
           whileTap={{ scale: 0.9 }}
           className="pi pi-refresh text-[18px] cursor-pointer"

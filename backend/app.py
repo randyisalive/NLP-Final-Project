@@ -24,7 +24,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 
 
 # load mT5 model
-model_selected = os.environ.get("MODEL")
+model_selected = os.environ.get("MT5_MODEL")
 bart_model_selected = os.environ.get("BART_MODEL")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print("Model Selected mT5:", model_selected)

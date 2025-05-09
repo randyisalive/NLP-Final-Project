@@ -120,13 +120,14 @@ training_args = TrainingArguments(
     output_dir="./mt5_results",
     eval_strategy="epoch",
     learning_rate=5e-5,
-    per_device_train_batch_size=64,
-    per_device_eval_batch_size=64,
+    per_device_train_batch_size=4,
+    per_device_eval_batch_size=4,
     num_train_epochs=MT5_NUM_TRAIN_EPOCH,
     weight_decay=0.01,
     save_total_limit=3,
     logging_dir="./logs",
     logging_steps=10,
+    gradient_accumulation_steps=4,
 )
 
 
@@ -144,4 +145,4 @@ trainer.train()
 # Evaluate the model
 trainer.evaluate()
 
-trainer.save_model(f"./fine_tuned_model_{MT5_NUM_TRAIN_EPOCH}_epoch")
+trainer.save_model(f"./fine_tuned_model_{MT5_NUM_TRAIN_EPOCH}_epoch_splitting")
